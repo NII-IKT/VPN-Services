@@ -1,4 +1,6 @@
 #!/bin/bash
+#скрипт для автоматического развертывания серверной части
+
 # проверяем права рута
 if [ "$(id -u)" != 0 ]
 then
@@ -15,6 +17,12 @@ fi
 
 #сраза обновляем apt-get
 apt-get update
+
+#Делаем синхронизацию по времени
+apt-get -y install ntpdate ntp
+service ntp stop
+ntpdate pool.ntp.org
+service ntp start
 
 #ставим ssh сервер
 apt-get -y install openssh-server
